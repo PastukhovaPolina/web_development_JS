@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Page</title>
+    <style>
+        .passport-container {
+            position: relative;
+            width: 600px;
+            height: 800px;
+            background-image: url('passport.jpg');
+            background-size: cover;
+        }
+        .surname, .name, .patronymic, .gender, .birthplace {
+            position: absolute;
+        }
+        .surname {
+            top: 500px;
+            left: 300px;
+        }
+        .name {
+            top: 570px;
+            left: 300px;
+        }
+        .patronymic {
+            top: 600px;
+            left: 300px;
+        }
+        .gender {
+            top: 640px;
+            left: 240px;
+        }
+        .birthplace {
+            top: 670px;
+            left: 300px;
+        }
+        #table {
+            margin-top: 50px;
+            border-collapse: collapse;
+            border: 1px;
+            width: 600px;
+        }
+        #table td, #table th {
+            border: 1px solid black;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="passport-container">
+        <div class="surname" id="surname">Иванов</div>
+        <div class="name" id="name">Иван</div>
+        <div class="patronymic" id="patronymic">Иванович</div>
+        <div class="gender" id="gender">Мужской</div>
+        <div class="birthplace" id="birthplace">Москва</div>
+    </div>
+
+    <!-- Кнопка для перевода всех данных -->
+    <button class="translate-button" id="translateButton">Перевести все</button>
+
+    <h1 id="insert_table">Вставить таблицу Пифагора</h1>
+    <table id="table" height="600"></table>
+
+    <script>
+        // Функция для перевода текста на английский
+        function translateToEnglish() {
+            document.getElementById('surname').innerText = 'Ivanov';
+            document.getElementById('name').innerText = 'Ivan';
+            document.getElementById('patronymic').innerText = 'Ivanovich';
+            document.getElementById('gender').innerText = 'Male';
+            document.getElementById('birthplace').innerText = 'Moscow';
+        }
+
+        // Добавляем обработчик события для кнопки перевода всех данных
+        const translateButton = document.getElementById('translateButton');
+        translateButton.addEventListener('click', translateToEnglish);
+
+        // Функция для вставки таблицы умножения
+        function insert_table() {
+            let n = 5; // размер таблицы
+            let table = document.querySelector('#table');
+
+            for (let i = 0; i < n; i++) {
+                let tr = document.createElement('tr');
+
+                for (let j = 0; j < n; j++) {
+                    let td = document.createElement('td');
+                    tr.appendChild(td);
+                    // Записываем произведение индексов, увеличенных на 1
+                    td.innerText = (i + 1) * (j + 1);
+                }
+
+                table.appendChild(tr);
+            }
+        }
+
+        const node_insert_table = document.getElementById("insert_table");
+        node_insert_table.addEventListener("click", insert_table);
+    </script>
+
+</body>
+</html>
