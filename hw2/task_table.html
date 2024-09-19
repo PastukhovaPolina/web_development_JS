@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeautyBox - Каталог Косметики</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        td {
+            background-color: #fff;
+        }
+        .btn {
+            cursor: pointer;
+            color: #007bff;
+            font-weight: bold;
+            padding: 0 10px;
+        }
+        p {
+            color: #333;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>BeautyBox - Магазин Косметики</h1>
+
+        <table id="catalog">
+            <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Цена за 1 шт</th>
+                    <th>Количество</th>
+                    <th>Цена за всё</th>
+                </tr>
+            </thead>
+            <tbody id="catalog-body">
+                <!-- Товары будут добавлены динамически -->
+            </tbody>
+        </table>
+
+        <p>ИТОГО: <span id="itog">0</span> руб.</p>
+    </div>
+
+    <script>
+        // Массив с косметическими товарами
+        const products = [
+            { name: "Тональный крем", price: 1500 },
+            { name: "Тушь для ресниц", price: 1200 },
+            { name: "Помада", price: 900 },
+            { name: "Пудра", price: 1100 },
+            { name: "Румяна", price: 1000 },
+            { name: "Крем для лица", price: 2500 },
+            { name: "Сыворотка для лица", price: 3000 },
+            { name: "Карандаш для глаз", price: 700 },
+            { name: "Тени для век", price: 1300 },
+            { name: "Мицеллярная вода", price: 800 }
+        ];
+
+        // Инициализация итоговой суммы
+        let totalPrice = 0;
+
+        // Функция для обновления общей суммы
+        function updateTotal(amount) {
+            totalPrice += amount;
+            document.getElementById('itog').innerText = totalPrice;
+        }
+
+        // Функции для увеличения и уменьшения количества товара
+        function plus(index) {
+            const col = document.getElementById('col_' + index);
+            const cenap = document.getElementById('cenap_' + index);
+            const cena = products[index].price;
+
+            col.innerText = Number(col.innerText) + 1;
+            cenap.innerText = Number(cenap.innerText) + cena;
+
+            updateTotal(cena);
+        }
+
+        function minus(index) {
+            const col = document.getElementById('col_' + index);
+            const cenap = document.getElementById('cenap_' + index);
+            const cena = products[index].price;
+
+            if (Number(col.innerText) > 0) {
+                col.innerText = Number(col.innerText) - 1;
+                cenap.innerText = Number(cenap.innerText) - cena;
+
+                updateTotal(-cena);
+            }
+        }
+
+        // Функция для создания строки товара
+        function createProductRow(product, index) {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${product.name}</td>
+                <td><b id="cena_${index}">${product.price}</b> руб.</td>
+                <td>
+                    <span class="btn" onclick="plus(${index})">[+]</span>
+                    <b id="col_${index}">0</b> шт.
+                    <span class="btn" onclick="minus(${index})">[-]</span>
+                </td>
+                <td><b id="cenap_${index}">0</b> руб.</td>
+            `;
+
+            return row;
+        }
+
+        // Добавление товаров в таблицу с использованием цикла
+        const catalogBody = document.getElementById('catalog-body');
+        products.forEach((product, index) => {
+            const row = createProductRow(product, index);
+            catalogBody.appendChild(row);
+        });
+    </script>
+
+</body>
+</html>

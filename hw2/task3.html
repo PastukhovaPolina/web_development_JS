@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн Банк</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Управление счетом</h1>
+        <p>Текущий баланс: <span id="balance">500</span> рублей</p>
+        <input type="number" id="amount" placeholder="Введите сумму">
+        <select id="operation">
+            <option value="внести">Внести на счет</option>
+            <option value="снять">Снять со счета</option>
+        </select>
+        <button onclick="processTransaction()">Выполнить операцию</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        let bankAccount = {
+            balance: 500,
+
+            // Метод для внесения средств
+            deposit: function(amount) {
+                this.balance += amount;
+                return this.balance;
+            },
+
+            // Метод для снятия средств
+            withdraw: function(amount) {
+                if (amount > this.balance) {
+                    return "Недостаточно средств на счете";
+                } else {
+                    this.balance -= amount;
+                    return this.balance;
+                }
+            }
+        };
+
+        function processTransaction() {
+            const amount = document.getElementById('amount').value;
+
+            // Проверка, введено ли значение суммы
+            if (amount === "") {
+                document.getElementById('result').innerText = "Введите сумму!";
+                return;
+            }
+
+            // Преобразование значения в число
+            const amountNumber = Number(amount);
+
+            // Проверка на отрицательное число или ноль
+            if (amountNumber <= 0) {
+                document.getElementById('result').innerText = "Сумма должна быть положительным числом больше нуля!";
+                return;
+            }
+
+            const choice = document.getElementById('operation').value;
+            let result = '';
+
+            if (choice === "внести") {
+                result = bankAccount.deposit(amountNumber);
+            } else if (choice === "снять") {
+                result = bankAccount.withdraw(amountNumber);
+            }
+
+            // Обновляем баланс и выводим результат операции
+            if (typeof result === "number") {
+                document.getElementById('balance').innerText = result;
+                document.getElementById('result').innerText = `Операция выполнена успешно. Новый баланс: ${result} рублей.`;
+            } else {
+                document.getElementById('result').innerText = result; // Если недостаточно средств
+            }
+        }
+    </script>
+</body>
+</html>

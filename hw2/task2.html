@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Математический тренажер</title>
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px;
+            width: 100%;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Математический тренажер</h1>
+        <p>Введите число Y, чтобы решить задачу</p>
+        <input type="number" id="inputY" placeholder="Введите Y" />
+        <button onclick="calculate()">Рассчитать</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculate() {
+            let Y = document.getElementById('inputY').value;
+
+            // Проверка, введено ли значение
+            if (Y === "") {
+                document.getElementById('result').innerText = "Введите Y!";
+                return;
+            }
+
+            // Преобразуем в число и продолжаем расчет
+            Y = Number(Y);
+
+            const calculator = {
+                base: Y - 2,
+                power: function(y) {
+                    return Math.pow(this.base, y);
+                }
+            };
+
+            let result = calculator.power(Y);
+            document.getElementById('result').innerText = `Результат: ${result}`;
+        }
+    </script>
+</body>
+</html>
