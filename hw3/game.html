@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игра Угадайка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Привет! Давай сыграем в игру Угадайка</h1>
+
+<p>Введите число от 1 до 10:</p>
+<input type="number" id="userGuess" min="1" max="10" placeholder="Число">
+<button onclick="checkGuess()">Угадать</button>
+
+<p id="result"></p>
+<p id="attempts">Осталось попыток: 3</p>
+
+<script>
+    // Загаданное число
+    let randomNumber = Math.floor(Math.random() * 10) + 1;
+    let attempts = 3;
+
+    // Функция для проверки числа
+    function checkGuess() {
+        let userGuess = document.getElementById('userGuess').value;
+
+        // Проверка, что пользователь ввел число
+        if (userGuess === "") {
+            document.getElementById('result').textContent = "Введите число!";
+            return;
+        }
+
+        userGuess = parseInt(userGuess);
+
+        // Проверка, что число в допустимых пределах
+        if (userGuess < 1 || userGuess > 10) {
+            document.getElementById('result').textContent = "Число должно быть в диапазоне от 1 до 10!";
+            return;
+        }
+
+        // Проверка попыток и угадано ли число
+        if (userGuess === randomNumber) {
+            document.getElementById('result').textContent = "Поздравляем! Вы угадали!";
+            document.getElementById('attempts').textContent = "";
+        } else {
+            attempts--; //Количество оставшихся попыток уменьшается на 1
+            if (attempts > 0) {
+                if (userGuess < randomNumber) {
+                    document.getElementById('result').textContent = "Слишком мало! Попробуйте еще раз.";
+                } else {
+                    document.getElementById('result').textContent = "Слишком много! Попробуйте еще раз.";
+                }
+                document.getElementById('attempts').textContent = `Осталось попыток: ${attempts}`;
+            } else {
+                document.getElementById('result').textContent = `Вы проиграли! Загаданное число было ${randomNumber}.`;
+                document.getElementById('attempts').textContent = "";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

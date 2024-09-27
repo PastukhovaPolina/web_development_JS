@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Концерты 2023</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        textarea {
+            width: 300px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Найти группу с наибольшим количеством концертов в 2023 году</h1>
+    <textarea id="concertsInput" placeholder="Введите данные о концертах..."></textarea><br>
+    <button onclick="findGroup()">Найти группу</button>
+    <p id="result"></p>
+
+    <script>
+        function findGroup() {
+            const input = document.getElementById('concertsInput').value.trim().split('\n');
+            const concertCount = {};
+            let ended = false;
+
+            // Обрабатываем данные построчно
+            for (let i = 0; i < input.length; i++) {
+                const line = input[i].trim();
+
+                // Проверка окончания ввода
+                if (line === 'END') {
+                    ended = true;
+                    break;
+                }
+
+                // Проверка формата строки (Название группы, ДД.ММ.ГГГГ)
+                const parts = line.split(', ');
+                if (parts.length !== 2) {
+                    document.getElementById('result').textContent = `Ошибка: неправильный формат ввода в строке ${i + 1}`;
+                    return;
+                }
+
+                const group = parts[0];
+                const date = parts[1];
+
+                // Проверяем формат даты
+                const datePattern = /^\d{2}\.\d{2}\.\d{4}$/;
+                if (!datePattern.test(date)) {
+                    document.getElementById('result').textContent = `Ошибка: неправильный формат даты в строке ${i + 1}`;
+                    return;
+                }
+
+                // Проверяем, что год 2023
+                const year = date.split('.')[2];
+                if (year === '2023') {
+                    if (concertCount[group]) {
+                        concertCount[group]++;
+                    } else {
+                        concertCount[group] = 1;
+                    }
+                }
+            }
+
+            // Проверка на наличие "END" в вводе
+            if (!ended) {
+                document.getElementById('result').textContent = 'Ошибка: отсутствует "END" для завершения ввода.';
+                return;
+            }
+
+            // Поиск группы с наибольшим количеством концертов
+            let maxConcerts = 0;
+            let bestGroup = '';
+            for (const group in concertCount) {
+                if (concertCount[group] > maxConcerts) {
+                    maxConcerts = concertCount[group];
+                    bestGroup = group;
+                }
+            }
+
+            document.getElementById('result').textContent = bestGroup
+                ? `${bestGroup} ${maxConcerts}`
+                : 'Группа не найдена';
+        }
+    </script>
+</body>
+</html>

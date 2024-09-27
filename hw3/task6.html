@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка города</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Проверка города</h1>
+    <p>Введите название города:</p>
+    <input type="text" id="cityInput" placeholder="Например, Москва">
+    <button onclick="checkCity()">Проверить</button>
+    <p id="result"></p>
+
+    <script>
+        const cities = ["Москва", "Санкт-Петербург", "Саратов", "Магадан", "Ярославль", "Самара", "Якутск"];
+
+        function checkCity() {
+            const inputCity = document.getElementById('cityInput').value.trim();
+            const resultElement = document.getElementById('result');
+
+            // Ищем город в списке
+            if (cities.includes(inputCity)) {
+                const firstLetter = inputCity[0].toUpperCase(); // Если город найден, берем первую букву введенного города и приводим ее к верхнему регистру
+                const matchingCities = cities.filter(city => city[0].toUpperCase() === firstLetter); // Фильтруем массив cities и находим все города, которые начинаются с этой же буквы
+                resultElement.textContent = `Города, начинающиеся с буквы "${firstLetter}": ${matchingCities.join(', ')}`;
+            } else {
+                resultElement.textContent = 'Такого города нет в списке';
+            }
+        }
+    </script>
+
+</body>
+</html>

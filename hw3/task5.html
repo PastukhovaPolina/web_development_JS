@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ товаров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Анализ товаров</h1>
+
+    <input type="text" id="inputData" placeholder="Введите данные о товарах" size="50">
+    <br>
+    <button onclick="analyzeProducts()">Анализировать</button>
+
+    <p id="result"></p>
+
+    <script>
+        function analyzeProducts() {
+            const input = document.getElementById('inputData').value;
+            const items = input.split('; '); // Разделение товаров по точке с запятой и пробелу
+
+            let productList = []; // Массив для хранения товаров и их средних цен
+
+
+            let hasError = false; // Флаг для отслеживания некорректных данных
+
+            items.forEach(item => {
+                let [name, prices] = item.split(':'); // Разделение на название и цены
+
+                let priceArray = prices.split(',').map(Number); // Проверяем наличие трёх цен для каждого товара
+                if (priceArray.length !== 3) {
+                    hasError = true;
+                } else {
+                    let avgPrice = priceArray.reduce((a, b) => a + b, 0) / priceArray.length; // Рассчет средней цены
+                    productList.push({ name: name, avgPrice: avgPrice }); // Добавляем товар и среднюю цену в массив
+                }
+            });
+
+            if (hasError) {
+                document.getElementById('result').innerHTML = "Ошибка: Для каждого товара должны быть указаны три цены.";
+            } else {
+                // Сортировка по средней цене, если цены одинаковые - по алфавиту
+                productList.sort((a, b) => a.avgPrice === b.avgPrice ? a.name.localeCompare(b.name) : a.avgPrice - b.avgPrice);
+
+                let result = productList.map(product => product.name).join('<br>');
+                document.getElementById('result').innerHTML = result;
+            }
+        }
+    </script>
+
+</body>
+</html>

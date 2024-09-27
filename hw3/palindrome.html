@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка палиндрома</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #00a2ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Проверка палиндрома</h1>
+    <input type="text" id="sentenceInput" placeholder="Введите слово или предложение">
+    <button onclick="checkPalindrome()">Проверить</button>
+    <p id="result"></p>
+
+    <script>
+        function isPalindrome(sentence) {
+            let cleanedSentence = "";
+            let reversedSentence = "";
+
+            // Проходим по каждому символу строки, убираем пробелы и приводим к нижнему регистру
+            for (let i = 0; i < sentence.length; i++) {
+                const char = sentence[i].toLowerCase();
+                if (char !== ' ') {
+                    cleanedSentence += char;
+                }
+            }
+
+            // Проходим по строке в обратном порядке и собираем перевёрнутую строку
+            for (let i = cleanedSentence.length - 1; i >= 0; i--) {
+                reversedSentence += cleanedSentence[i];
+            }
+
+            // Сравниваем исходную очищенную строку с перевёрнутой
+            return cleanedSentence === reversedSentence;
+        }
+
+        function checkPalindrome() {
+            const sentence = document.getElementById('sentenceInput').value.trim();
+            const resultElement = document.getElementById('result');
+
+            if (sentence === "") {
+                resultElement.textContent = "Введите слово или предложение.";
+                resultElement.style.color = 'blue';
+            } else if (isPalindrome(sentence)) {
+                resultElement.textContent = "Палиндромом.";
+                resultElement.style.color = 'green';
+            } else {
+                resultElement.textContent = "Не является пандромом.";
+                resultElement.style.color = 'red';
+            }
+        }
+    </script>
+
+</body>
+</html>

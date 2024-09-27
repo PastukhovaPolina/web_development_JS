@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подсчет среднего балла</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h2>Подсчет среднего балла учеников</h2>
+
+    <p>Введите имена учеников через запятую и пробел:</p>
+    <input type="text" id="names" placeholder="Например: Алина, Маша, Игорь" size="50">
+
+    <p>Введите оценки учеников через пробел (каждая группа оценок через дефис):</p>
+    <input type="text" id="grades" placeholder="Например: 30-10-20 78-23-43 15-18-10" size="50">
+
+    <br>
+    <button onclick="calculateLowest()">Найти самого отстающего ученика</button>
+    <p id="result"></p>
+
+    <script>
+        function calculateLowest() {
+
+            let namesInput = document.getElementById('names').value.split(', ').map(name => name.trim()); // Получаем введенные имена и разбиваем их в массив по запятой и пробелу
+            let gradesInput = document.getElementById('grades').value.split(' '); // Получаем введенные оценки и разбиваем их в массив по пробелам
+
+            // Проверка на ввод данных (чтобы была хотя бы одна запись)
+            if (namesInput.length === 0 || gradesInput.length === 0) {
+                document.getElementById('result').innerText = 'Пожалуйста, введите хотя бы одного ученика и его оценки.';
+                return;
+            }
+
+            // Проверка: количество учеников должно совпадать с количеством введенных оценок
+            if (namesInput.length !== gradesInput.length) {
+                document.getElementById('result').innerText = 'Количество учеников и количество наборов оценок должно совпадать.';
+                return;
+            }
+
+            // Проверка на повторяющиеся имена
+            let uniqueNames = new Set(namesInput);
+            if (uniqueNames.size !== namesInput.length) {
+                document.getElementById('result').innerText = 'Имена учеников не должны повторяться.';
+                return;
+            }
+
+            // Переменные для хранения минимального среднего балла и имени ученика
+            let lowestAverage = Infinity;
+            let lowestStudent = '';
+
+            for (let i = 0; i < namesInput.length; i++) { // Проходим по каждому ученику
+
+                let grades = gradesInput[i].split('-').map(Number); // Берем оценки текущего ученика, разделяем их по дефисам и проверяем правильность
+
+                // Проверка: все три оценки должны быть числами
+                if (grades.length !== 3 || grades.some(isNaN)) {
+                    document.getElementById('result').innerText = 'Каждый ученик должен иметь три числовых оценки.';
+                    return;
+                }
+
+                let average = grades.reduce((a, b) => a + b, 0) / grades.length; // Вычисляем средний балл для текущего ученика
+
+                if (average < lowestAverage) { // Если текущий средний балл ниже, чем предыдущий минимальный, обновляем данные
+                    lowestAverage = average;
+                    lowestStudent = namesInput[i]; // Запоминаем имя ученика с наименьшим средним баллом
+                }
+            }
+
+            document.getElementById('result').innerText = 'Самый отстающий ученик: ' + lowestStudent;
+        }
+    </script>
+</body>
+</html>

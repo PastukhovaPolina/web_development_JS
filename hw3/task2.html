@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор максимальной прибыли</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        input {
+            width: 300px;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Калькулятор максимальной прибыли</h1>
+
+    <div>
+        <input type="text" id="inputField" placeholder="Введите товар, прибыль">
+        <button onclick="addEntry()">Добавить запись</button>
+    </div>
+
+    <div id="entries"></div>
+    <div id="result"></div>
+
+    <script>
+        let data = []; // Массив для хранения данных о товарах и их прибыли
+
+        function addEntry() {
+            const input = document.getElementById('inputField').value.trim(); // Получаем значение из поля ввода
+            if (input.toUpperCase() === "END") { // Если введено "END", рассчитываем максимальную прибыль
+                calculateMaxProfit();
+                return;
+            }
+
+            if (input !== "") { // Проверяем, что поле не пустое
+                const entry = input.split(','); // Разделяем строку на название товара и прибыль
+                if (entry.length === 2 && !isNaN(parseInt(entry[1]))) { // Проверяем правильность формата
+
+                    data.push({name: entry[0], profit: parseInt(entry[1])}); // Добавляем запись в массив
+                    document.getElementById('entries').innerHTML += `<p>${entry[0]}, ${entry[1]}</p>`; // Отображаем добавленную запись на странице
+                    document.getElementById('inputField').value = ""; // Очищаем поле ввода
+                } else {
+                    alert("Неверный ввод. Введите в формате: Товар,Прибыль");
+                }
+            }
+        }
+
+        function calculateMaxProfit() {
+            const profitMap = {}; // Объект для хранения суммарной прибыли по каждому товару
+
+            // Суммируем прибыль для каждого товара
+            data.forEach(entry => {
+                if (profitMap[entry.name]) {
+                    profitMap[entry.name] += entry.profit; // Если товар уже был, добавляем к его прибыли
+                } else {
+                    profitMap[entry.name] = entry.profit; // Если товар новый, создаем запись с его прибылью
+                }
+            });
+
+            let maxProfit = -Infinity; // Переменная для хранения максимальной прибыли
+            let maxItem = ''; // Переменная для хранения названия товара с максимальной прибылью
+
+            // Поиск товара с максимальной прибылью
+            for (const [item, profit] of Object.entries(profitMap)) {
+                if (profit > maxProfit) {
+                    maxProfit = profit;
+                    maxItem = item;
+                }
+            }
+
+            document.getElementById('result').innerHTML = `<p>Товар с максимальной прибылью: ${maxItem}, ${maxProfit}</p>`;
+        }
+    </script>
+</body>
+</html>

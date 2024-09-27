@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подсчет калорийности продуктов</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        input {
+            padding: 10px;
+            margin: 5px;
+            width: 400px;
+        }
+        button {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Подсчет калорийности продуктов</h1>
+    <p>Введите названия продуктов через пробел:</p>
+    <input type="text" id="productNames" placeholder="Пример: банан мандарин кефир курочка"><br>
+
+    <p>Введите значения белков, жиров и углеводов для каждого продукта (в формате 'белки-жиры-углеводы'):</p>
+    <input type="text" id="productValues" placeholder="Пример: 120-130-190 156-182-190 120-145-90 139-129-102"><br>
+
+    <button onclick="findLowestCalorieProduct()">Рассчитать</button>
+
+    <p id="result"></p>
+
+    <script>
+        function findLowestCalorieProduct() {
+
+            const names = document.getElementById("productNames").value.split(" "); // Получаем список названий продуктов из текстового поля, разделяя их по пробелу
+            const values = document.getElementById("productValues").value.split(" "); // Получаем список значений белков, жиров и углеводов, разделяя их по пробелу
+
+            // Проверка: если количество продуктов не совпадает с количеством данных о них
+            if (names.length !== values.length) {
+                document.getElementById("result").textContent = "Количество продуктов и значений не совпадает!";
+                return; // Прерываем выполнение функции, если есть ошибка
+            }
+
+
+            let minCalories = Infinity; // Инициализируем переменную для хранения минимального значения калорий
+            let lowestCalorieProduct = ''; // Инициализируем переменную для хранения названия самого низкокалорийного продукта
+
+            for (let i = 0; i < names.length; i++) { // Проходим по каждому продукту и его данным
+                const [proteins, fats, carbs] = values[i].split('-').map(Number); // Разделяем данные о белках, жирах и углеводах и преобразуем их в числа
+
+                // Проверка: если хотя бы одно значение не является числом
+                if (isNaN(proteins) || isNaN(fats) || isNaN(carbs)) {
+                    document.getElementById("result").textContent = "Ошибка ввода данных!";
+                    return; // Прерываем выполнение функции, если данные некорректны
+                }
+
+                const calories = 0.4 * proteins + 0.3 * fats + 0.3 * carbs; // Вычисляем калорийность продукта по формуле
+
+                // Если текущий продукт имеет меньшую калорийность, обновляем минимальное значение
+                if (calories < minCalories) {
+                    minCalories = calories;
+                    lowestCalorieProduct = names[i]; // Сохраняем название этого продукта
+                }
+            }
+
+            document.getElementById("result").textContent = `Самый низкокалорийный продукт: ${lowestCalorieProduct}`;
+        }
+    </script>
+</body>
+</html>
