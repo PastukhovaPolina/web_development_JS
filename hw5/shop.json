@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "title": "Тональный крем",
+        "price": 1500,
+        "description": "Тональный крем для естественного покрытия",
+        "img": "https://www.beautyhunter.co.th/wp-content/uploads/2018/05/180531-6-make-up-for-sensitive-skin-02-1.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Помада",
+        "price": 800,
+        "description": "Яркая губная помада",
+        "img": "https://cdn.4stand.com/huge/73/22/732259d760eee6fec1a6a1e71d07086b5821c575.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Тушь для ресниц",
+        "price": 1200,
+        "description": "Объёмная тушь для ресниц",
+        "img": "https://avatars.mds.yandex.net/i?id=da4e185c99c9ff69cda02576804e42e843b24f7c-10122878-images-thumbs&n=13"
+    },
+    {
+        "id": 4,
+        "title": "Пудра для лица",
+        "price": 1300,
+        "description": "Матирующая пудра для лица",
+        "img": "https://avatars.mds.yandex.net/i?id=b1bb6a06ec4b0da0ab283fe959da5498_l-12422392-images-thumbs&n=13"
+    },
+    {
+        "id": 5,
+        "title": "Румяна",
+        "price": 1000,
+        "description": "Нежные румяна для свежего вида",
+        "img": "https://cdn1.skinsafeproducts.com/photo/745ED06D6061F7/large_1489297798.jpeg?1489297798"
+    },
+    {
+        "id": 6,
+        "title": "Подводка для глаз",
+        "price": 900,
+        "description": "Водостойкая подводка для глаз",
+        "img": "https://i.pinimg.com/736x/70/96/1a/70961a3f661a6a3ab1abe6f87acbc625--makeup-tips-makeup-products.jpg"
+    },
+    {
+        "id": 7,
+        "title": "Блеск для губ",
+        "price": 700,
+        "description": "Глянцевый блеск для губ",
+        "img": "https://101hairtips.com/wp-content/uploads/9/3/e/93e450c3b90dd987bb21178b1d1bdaa0.jpg"
+    },
+    {
+        "id": 8,
+        "title": "Крем для лица",
+        "price": 2000,
+        "description": "Увлажняющий крем для лица",
+        "img": "https://perfumeoasis.me/media/catalog/product/cache/c1a1809a7d1fda2ff7db8c46e0a15096/0/2/020714770020.jpeg"
+    },
+    {
+        "id": 9,
+        "title": "Маска для лица",
+        "price": 1800,
+        "description": "Очищающая маска для лица",
+        "img": "https://diamondelectric.ru/images/534/533614/maska_clinique_antiblemish_solutions_1.jpg"
+    },
+    {
+        "id": 10,
+        "title": "Скраб для тела",
+        "price": 1500,
+        "description": "Отшелушивающий скраб для тела",
+        "img": "https://www.save24.lv/7212-thickbox_default/clinique-sparkle-skin-body-exfoliator-skrab-dlya-tela-200-ml.jpg"
+    }
+]
